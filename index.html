@@ -26,12 +26,7 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
         
-        h1 {
-            margin-bottom: 40px;
-            font-size: 2.5em;
-            font-weight: 300;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
+                h1 {            margin-bottom: 60px;            font-size: 4em;            font-weight: 100;            letter-spacing: 8px;            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.4);            font-family: 'Segoe UI', sans-serif;        }
         
         .button-container {
             display: flex;
@@ -115,36 +110,32 @@
 <body>
     <div class="container">
         <h1>SONAR</h1>
-        <p>Binaural & Isochrone Audio voor Mentale Toestanden</p>
         
         <div class="button-container">
             <div>
-                <button class="float-btn" onclick="play('float_4hz.wav', 'Float (4 Hz)')">
-                    Float (4 Hz)
+                <button class="float-btn" onclick="play('float_4hz.wav', 'Float')">
+                    Float
                 </button>
                 <div class="description">
-                    Voor diepe rust en slaap<br>
-                    Isochrone tonen met pulserend ritme
+                    Voor diepe rust en slaap
                 </div>
             </div>
             
             <div>
-                <button class="flow-btn" onclick="play('flow_12hz.wav', 'Flow (12 Hz)')">
-                    Flow (12 Hz)
+                <button class="flow-btn" onclick="play('flow_12hz.wav', 'Flow')">
+                    Flow
                 </button>
                 <div class="description">
-                    Voor ontspanning, creativiteit en meditatie<br>
-                    Binaural beats met golvend ritme
+                    Voor ontspanning en creativiteit
                 </div>
             </div>
             
             <div>
-                <button class="focus-btn" onclick="play('focus_50hz.wav', 'Focus (50 Hz)')">
-                    Focus (50 Hz)
+                <button class="focus-btn" onclick="play('focus_50hz.wav', 'Focus')">
+                    Focus
                 </button>
                 <div class="description">
-                    Voor focus, alertheid en cognitieve taken<br>
-                    Zuivere binaural beats zonder afleiding
+                    Voor alertheid en concentratie
                 </div>
             </div>
         </div>
@@ -167,11 +158,11 @@
             
             player.src = filename;
             player.style.display = "block";
-            audioInfo.innerHTML = `Nu aan het afspelen: <strong>${name}</strong> (loopt automatisch)`;
+            audioInfo.innerHTML = `${name}`;
             
             player.play().catch(function(error) {
                 console.log("Autoplay prevented:", error);
-                audioInfo.innerHTML = `Klaar om af te spelen: <strong>${name}</strong><br>Klik op play om te starten.`;
+                audioInfo.innerHTML = `${name}`;
             });
             
             currentAudio = filename;
