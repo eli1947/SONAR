@@ -14,6 +14,22 @@
             color: white;
             min-height: 100vh;
             box-sizing: border-box;
+            transition: background 2s ease;
+        }
+        
+        body.float-active {
+            background: linear-gradient(135deg, #a8c8ec 0%, #b8c6db 100%);
+            color: #2c3e50;
+        }
+        
+        body.flow-active {
+            background: linear-gradient(135deg, #f7f8b8 0%, #a3d977 100%);
+            color: #2c5530;
+        }
+        
+        body.focus-active {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
         }
         
         .container {
@@ -33,6 +49,94 @@
             letter-spacing: 8px;
             text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.4);
             font-family: 'Segoe UI', sans-serif;
+        }
+        
+        .general-instructions {
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .general-instructions h3 {
+            margin: 0 0 15px 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .general-instructions p {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.6;
+            opacity: 0.95;
+        }
+        
+        .visual-container {
+            margin: 30px 0;
+            height: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .visual-element {
+            display: none;
+        }
+        
+        .visual-element.active {
+            display: block;
+        }
+        
+        .breath-circle {
+            width: 80px;
+            height: 80px;
+            border: 3px solid currentColor;
+            border-radius: 50%;
+            opacity: 0.7;
+            animation: breathe 6s ease-in-out infinite;
+        }
+        
+        .flow-wave {
+            width: 100px;
+            height: 60px;
+            position: relative;
+        }
+        
+        .flow-wave::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background: currentColor;
+            border-radius: 50px;
+            animation: wave 3s ease-in-out infinite;
+        }
+        
+        .focus-dot {
+            width: 20px;
+            height: 20px;
+            background: currentColor;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: pulse 1s ease-in-out infinite;
+        }
+        
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.4); opacity: 0.9; }
+        }
+        
+        @keyframes wave {
+            0%, 100% { transform: translateY(0) scaleX(1); }
+            25% { transform: translateY(-15px) scaleX(1.1); }
+            50% { transform: translateY(0) scaleX(0.9); }
+            75% { transform: translateY(15px) scaleX(1.1); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.6; }
+            50% { transform: scale(1.8); opacity: 1; }
         }
         
         .button-container {
@@ -76,7 +180,17 @@
             transform: translateY(0);
         }
         
-                .description {            margin-top: 15px;            font-size: 13px;            opacity: 0.95;            line-height: 1.5;            text-align: left;            background: rgba(255, 255, 255, 0.05);            padding: 12px;            border-radius: 8px;            border-left: 3px solid rgba(255, 255, 255, 0.3);        }
+        .description {
+            margin-top: 15px;
+            font-size: 13px;
+            opacity: 0.95;
+            line-height: 1.5;
+            text-align: left;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 3px solid rgba(255, 255, 255, 0.3);
+        }
         
         @media (max-width: 600px) {
             .container {
@@ -93,6 +207,15 @@
                 padding: 15px 25px;
                 font-size: 16px;
             }
+            
+            .visual-container {
+                height: 80px;
+            }
+            
+            .breath-circle {
+                width: 60px;
+                height: 60px;
+            }
         }
     </style>
 </head>
@@ -100,8 +223,41 @@
     <div class="container">
         <h1>SONAR</h1>
         
+        <div class="general-instructions">
+            <h3>🔊 Algemene gebruiksinstructie</h3>
+            <p>🎧 Gebruik bij <strong>Flow</strong> en <strong>Focus</strong> een koptelefoon en zet het volume op ongeveer 50%.<br>
+            Bij <strong>Float</strong> is een koptelefoon niet nodig — luisteren via speakers is prima.<br>
+            Luister minimaal 15 minuten om het effect van de frequentie echt te ervaren.<br>
+            Zoek een rustige plek, sluit eventueel je ogen, en laat het ritme zijn werk doen.</p>
+        </div>
+        
+        <div class="visual-container">
+            <div class="visual-element breath-circle" id="float-visual"></div>
+            <div class="visual-element flow-wave" id="flow-visual"></div>
+            <div class="visual-element focus-dot" id="focus-visual"></div>
+        </div>
+        
         <div class="button-container">
-                        <div>                <button class="float-btn" onclick="play('float_4hz.wav')">                    🌊 Float                </button>                <div class="description">                    <strong>4 Hz – Diepe rust / herstel</strong><br>                    🟢 Volume: 40–50%<br>                    De klanken mogen voelbaar zijn als een ritme, maar niet opvallen.<br>                    Laat het geluid je begeleiden zoals een zachte golf.<br>                    ✨ <em>Voor slapen, na stress, tijdens ontspanning</em>                </div>            </div>                        <div>                <button class="flow-btn" onclick="play('flow_12hz.wav')">                    🔁 Flow                </button>                <div class="description">                    <strong>12 Hz – Creatieve balans / leren</strong><br>                    🟡 Volume: 50–60%<br>                    De audio mag aanwezig zijn als een ademend patroon.<br>                    Als je kunt denken én ontspannen tegelijk, zit je goed.<br>                    ✨ <em>Tijdens tekenen, lezen, leren of dagdromen</em>                </div>            </div>                        <div>                <button class="focus-btn" onclick="play('focus_50hz.wav')">                    🔷 Focus                </button>                <div class="description">                    <strong>50 Hz – Piekprestatie / denken</strong><br>                    🔵 Volume: 55–65%<br>                    De beats mogen duidelijk hoorbaar zijn, maar nooit scherp.<br>                    Laat het je dragen, niet duwen bij diep denken.<br>                    ✨ <em>Tijdens werk, intens leren of complexe taken</em>                </div>            </div>
+            <div>
+                <button class="float-btn" onclick="play('float_4hz.wav', 'float')">
+                    🌊 Float
+                </button>
+                                 <div class="description">                     <strong>🟢 FLOAT – 4 Hz</strong><br>                     <em>"Tijd om te vertragen."</em><br><br>                     <strong>Frequentie:</strong> 4 Hz (tussen delta en theta)<br>                     <strong>Doel:</strong> diepe ontspanning, herstel en loslaten<br>                     <strong>Ideaal voor:</strong> slapen, ademhalingsoefeningen, herstellen na stress, nietsdoen<br>                     🎯 <em>Gebruik wanneer je tot rust wilt komen of spanning los wilt laten.</em>                 </div>
+            </div>
+            
+            <div>
+                <button class="flow-btn" onclick="play('flow_12hz.wav', 'flow')">
+                    🔁 Flow
+                </button>
+                                 <div class="description">                     <strong>🟡 FLOW – 12 Hz</strong><br>                     <em>"Waar dwaalt je aandacht naartoe?"</em><br><br>                     <strong>Frequentie:</strong> 12 Hz (tussen alpha en beta)<br>                     <strong>Doel:</strong> ontspannen alertheid, creatieve focus, leerbaarheid<br>                     <strong>Ideaal voor:</strong> schrijven, lezen, tekenen, brainstormen, lichte concentratie<br>                     🎯 <em>Gebruik wanneer je helder wilt denken, maar ook vrij wilt blijven voelen.</em>                 </div>
+            </div>
+            
+            <div>
+                <button class="focus-btn" onclick="play('focus_50hz.wav', 'focus')">
+                    🔷 Focus
+                </button>
+                                 <div class="description">                     <strong>🔵 FOCUS – 50 Hz</strong><br>                     <em>"Wat vraagt nu je volle aandacht?"</em><br><br>                     <strong>Frequentie:</strong> 50 Hz (in het midden van gamma)<br>                     <strong>Doel:</strong> piekfocus, mentale scherpte, diepe concentratie<br>                     <strong>Ideaal voor:</strong> werken, programmeren, rekenen, plannen, beslissingen nemen<br>                     🎯 <em>Gebruik wanneer je mentaal wil pieken en afleiding tot een minimum wil brengen.</em>                 </div>
+            </div>
         </div>
     </div>
 
@@ -111,14 +267,26 @@
     <script>
         let currentAudio = null;
         
-        function play(filename) {
+        function play(filename, mode) {
             const player = document.getElementById("player");
+            const body = document.body;
             
             // Stop current audio if playing
             if (currentAudio) {
                 player.pause();
             }
             
+            // Reset all visual states
+            body.className = '';
+            document.querySelectorAll('.visual-element').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            // Set new mode
+            body.classList.add(mode + '-active');
+            document.getElementById(mode + '-visual').classList.add('active');
+            
+            // Play audio
             player.src = filename;
             player.play().catch(function(error) {
                 console.log("Autoplay prevented:", error);
